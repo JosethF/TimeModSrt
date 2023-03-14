@@ -35,34 +35,28 @@ public class timeSrt {
             myReader.close();
             fw.close();
         } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
             e.printStackTrace();
         }
     }
 
-
     public static String customTime(String data, int inputSeconds,boolean operation){
-        String primero = "";
-        String segundo = "";
-
-        primero = timeCalc(data.substring(0,8),inputSeconds, operation);
-        segundo = timeCalc(data.substring(17,25),inputSeconds, operation);
+        
+        String primero = timeCalc(data.substring(0,8),inputSeconds, operation);
+        String segundo = timeCalc(data.substring(17,25),inputSeconds, operation);
 
         return primero+" --> "+segundo;
     }
 
     public static String timeCalc(String data, int inputSeconds,boolean operation){
-
         int horas = Integer.parseInt(data.substring(0, 2));
         int minutos = Integer.parseInt(data.substring(3, 5));
         int segundos = Integer.parseInt(data.substring(6, 8));
 
         if(operation) return addSeconds(horas, minutos, segundos, inputSeconds);
-        else return substractSeconds(horas, minutos, segundos, inputSeconds); 
+        else return substractSeconds(horas, minutos, segundos, inputSeconds);
     }
 
     public static String addSeconds(int horas, int minutos, int segundos,int inputSeconds){
-
         if(segundos<60){
             segundos = segundos+inputSeconds;
             if(segundos >= 60){
@@ -74,16 +68,10 @@ public class timeSrt {
                 }
             }
         }
-
-        String nhoras = ((horas<10) ? "0":"")+Integer.toString(horas);
-        String nMinutos = ((minutos<10) ? "0":"")+Integer.toString(minutos);
-        String nSegundos = ((segundos<10) ? "0":"")+Integer.toString(segundos)+",000";
-
-        return nhoras+":"+nMinutos+":"+nSegundos;
+        return returnTime(horas, minutos, segundos);
     }
 
     public static String substractSeconds(int horas, int minutos, int segundos,int inputSeconds){
-        
         segundos = Math.abs(segundos - inputSeconds);
         if(segundos<1){
             minutos--;
@@ -93,6 +81,10 @@ public class timeSrt {
                 minutos=60-minutos;
             }
         }
+        return returnTime(horas, minutos, segundos);
+    }
+
+    public static String returnTime(int horas, int minutos, int segundos){
 
         String nhoras = ((horas<10) ? "0":"")+Integer.toString(horas);
         String nMinutos = ((minutos<10) ? "0":"")+Integer.toString(minutos);
