@@ -16,7 +16,7 @@ public class timeSrt {
             Scanner myReader = new Scanner(myObj);
             System.out.println("Do you want add or substract seconds?");
             String operationInput = scanner.nextLine();
-            boolean operation = (operationInput=="add") ? false:true;
+            boolean operation = (operationInput.equals("add")) ? true:false;
             System.out.println("How many seconds do you want add?");
             int inputSeconds =  Integer.parseInt(scanner.nextLine());
             FileWriter fw = new FileWriter(nameFile+"Trasnformed.srt");
@@ -58,7 +58,7 @@ public class timeSrt {
         int segundos = Integer.parseInt(data.substring(6, 8));
 
         if(operation) return addSeconds(horas, minutos, segundos, inputSeconds);
-        else return "";        
+        else return substractSeconds(horas, minutos, segundos, inputSeconds); 
     }
 
     public static String addSeconds(int horas, int minutos, int segundos,int inputSeconds){
@@ -72,6 +72,25 @@ public class timeSrt {
                     horas++;
                     minutos=minutos-60;
                 }
+            }
+        }
+
+        String nhoras = ((horas<10) ? "0":"")+Integer.toString(horas);
+        String nMinutos = ((minutos<10) ? "0":"")+Integer.toString(minutos);
+        String nSegundos = ((segundos<10) ? "0":"")+Integer.toString(segundos)+",000";
+
+        return nhoras+":"+nMinutos+":"+nSegundos;
+    }
+
+    public static String substractSeconds(int horas, int minutos, int segundos,int inputSeconds){
+        
+        segundos = Math.abs(segundos - inputSeconds);
+        if(segundos<1){
+            minutos--;
+            segundos = 60-segundos;
+            if(minutos<=0){
+                horas--;
+                minutos=60-minutos;
             }
         }
 
